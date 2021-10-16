@@ -19,6 +19,7 @@ public interface JpaConst {
     String TABLE_DIA = "diaries"; //テーブル名
     //日報テーブルカラム
     String DIA_COL_ID = "id"; //id
+    String DIA_COL_NAME = "name"; //書いた人の名前
     String DIA_COL_REP_DATE = "diary_date"; //いつの日記かを示す日付
     String DIA_COL_TITLE = "title"; //日記のタイトル
     String DIA_COL_CONTENT = "content"; //日記の内容
