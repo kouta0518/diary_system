@@ -10,7 +10,7 @@ public interface JpaConst {
     String PERSISTENCE_UNIT_NAME = "diary_system";
 
     //データ取得件数の最大値
-    int ROW_DIA_PAGE = 15; //1ページに表示するレコードの数
+    int ROW_PER_PAGE = 15; //1ページに表示するレコードの数
 
     int ROLE_ADMIN = 1; //管理者権限ON(管理者)
     int ROLE_GENERAL = 0; //管理者権限OFF(一般)
