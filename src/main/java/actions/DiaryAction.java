@@ -10,6 +10,7 @@ import actions.views.DiaryView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
+import constants.MessageConst;
 import services.DiaryService;
 
 /**
@@ -71,5 +72,54 @@ public class DiaryAction extends ActionBase {
         putRequestScope(AttributeConst.DIARY, rv);
 
         forward(ForwardConst.FW_DIA_NEW);
+    }
+
+    /**
+     * 新規登録を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void create() throws ServletException, IOException {
+        //CSRF対策 tokenのチェック
+        if (checkToken()) {
+            //日報の日付が入力されていなければ、今日の日付を設定
+            LocalDate day = null;
+            if (getRequestParam(AttributeConst.DIA_DATE) == null
+                    || getRequestParam(AttributeConst.DIA_DATE).equals("")) {
+                day = LocalDate.now();
+            } else {
+                day = LocalDate.parse(getRequestParam(AttributeConst.DIA_DATE));
+            }
+            //パラメータの値をもとに日報情報のインスタンスを作成する
+            DiaryView rv = new DiaryView(
+                    null,
+                    null,
+                    day,
+                    getRequestParam(AttributeConst.DIA_TITLE),
+                    getRequestParam(AttributeConst.DIA_CONTENT),
+                    null,
+                    null);
+            //日報情報登録
+            List<String> errors = service.create(rv);
+
+            if (errors.size() > 0) {
+                //登録中にエラーがあった場合
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId());//CSRF対策用トークン
+                putRequestScope(AttributeConst.DIARY, rv);//入力された日報情報
+                putRequestScope(AttributeConst.ERR, errors);//エラーのリスト
+
+                //新規登録画面を再表示
+                forward(ForwardConst.FW_DIA_NEW);
+
+            } else {
+
+                //セッションに登録完了のフラッシュメッセージを設定
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
+
+                //一覧画面にリダイレクト
+                redirect(ForwardConst.ACT_DIA, ForwardConst.CMD_INDEX);
+            }
+        }
     }
 }
