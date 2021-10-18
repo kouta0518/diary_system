@@ -94,15 +94,6 @@ button {
     background-color: #f8d7da;
 }
 
-table#employee_list th {
-    width: 30%;
-    padding: 10px 2%;
-}
-
-table#employee_list td {
-    width: 29%;
-    padding: 10px 2%;
-}
 
 tr.row1 {
         background-color: #f2f2f2;
@@ -123,14 +114,6 @@ select {
     display: inline-block;
 }
 
-#employee_name {
-    color: #cccccc;
-    width: 36%;
-    padding-right: 3%;
-    text-align: right;
-    display: inline-block;
-}
-
 #header a {
     color: #eeeeee;
 }
@@ -139,24 +122,24 @@ h1 a {
     color: #eeeeee;
 }
 
-table#report_list th {
+table#diary_list th {
     font-weight: bold;
     padding: 10px 2%;
 }
 
-table#report_list .report_name {
+table#diary_list .diary_name {
     width: 20%;
     padding: 10px 2%;
 }
-table#report_list .report_date {
+table#diary_list .diary_date {
     width: 20%;
 }
 
-table#report_list .report_title {
+table#diary_list .diary_title {
     width: 37%;
 }
 
-table#report_list .report_action {
+table#diary_list .diary_action {
     width: 13%;
 }
 
