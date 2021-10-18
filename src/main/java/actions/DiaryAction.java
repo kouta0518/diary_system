@@ -1,5 +1,7 @@
 package actions;
+
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,12 +11,14 @@ import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import services.DiaryService;
+
 /**
  * 日報に関する処理を行うActionクラス
  *
  */
 public class DiaryAction extends ActionBase {
     private DiaryService service;
+
     /**
      * メソッドを実行する
      */
@@ -22,10 +26,11 @@ public class DiaryAction extends ActionBase {
     public void process() throws ServletException, IOException {
         service = new DiaryService();
 
-      //メソッドを実行
+        //メソッドを実行
         invoke();
         service.close();
     }
+
     /**
      * 一覧画面を表示する
      * @throws ServletException
@@ -51,5 +56,20 @@ public class DiaryAction extends ActionBase {
         }
         //
         forward(ForwardConst.FW_DIA_INDEX);
+    }
+
+    /**
+     * 新規登録画面を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void entryNew() throws ServletException, IOException {
+        putRequestScope(AttributeConst.TOKEN, getTokenId());
+
+        DiaryView rv = new DiaryView();
+        rv.setDiaryDate(LocalDate.now());
+        putRequestScope(AttributeConst.DIARY, rv);
+
+        forward(ForwardConst.FW_DIA_NEW);
     }
 }

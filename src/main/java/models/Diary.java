@@ -55,7 +55,7 @@ public class Diary {
     /**
      * いつの日報かを示す日付
      */
-    @Column(name = JpaConst.DIA_COL_REP_DATE, nullable = false)
+    @Column(name = JpaConst.DIA_COL_DIA_DATE, nullable = false)
     private LocalDate diaryDate;
 
     /**
