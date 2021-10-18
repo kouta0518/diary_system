@@ -122,4 +122,24 @@ public class DiaryAction extends ActionBase {
             }
         }
     }
+    /**
+     * 詳細画面を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void show() throws ServletException, IOException {
+
+        //
+        DiaryView rv = service.findOne(toNumber(getRequestParam(AttributeConst.DIA_ID)));
+
+        if (rv == null) {
+            //
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+
+        } else {
+            putRequestScope(AttributeConst.DIARY, rv);
+
+            forward(ForwardConst.FW_DIA_SHOW);
+        }
+    }
 }
