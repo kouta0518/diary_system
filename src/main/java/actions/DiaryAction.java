@@ -165,6 +165,40 @@ public class DiaryAction extends ActionBase {
             //編集画面を表示
             forward(ForwardConst.FW_DIA_EDIT);
         }
+    }
 
+    /**
+     * 更新を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void update() throws ServletException, IOException {
+        //CSRF対策 tokenのチェック
+        if (checkToken()) {
+            //idを条件に日記データを取得する
+            DiaryView rv = service.findOne(toNumber(getRequestParam(AttributeConst.DIA_ID)));
+            //入力された日記内容を設定する
+            rv.setDiaryDate(toLocalDate(getRequestParam(AttributeConst.DIA_DATE)));
+            rv.setTitle(getRequestParam(AttributeConst.DIA_TITLE));
+            rv.setContent(getRequestParam(AttributeConst.DIA_CONTENT));
+            //日記データを更新する
+            List<String> errors = service.update(rv);
+
+            if (errors.size() > 0) {
+                //更新中にエラーが発生した場合
+                putRequestScope(AttributeConst.TOKEN, getTokenId());//CSRF対策用トークン
+                putRequestScope(AttributeConst.DIARY, rv);//入力された日記情報
+                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+                //編集画面を再表示
+                forward(ForwardConst.FW_DIA_EDIT);
+            } else {
+                //更新中にエラーがなかった場合
+                //セッションに更新完了のフラッシュメッセージを設定
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
+
+                //一覧画面にリダイレクト
+                redirect(ForwardConst.ACT_DIA, ForwardConst.CMD_INDEX);
+            }
+        }
     }
 }
