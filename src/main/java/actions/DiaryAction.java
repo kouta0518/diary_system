@@ -122,6 +122,7 @@ public class DiaryAction extends ActionBase {
             }
         }
     }
+
     /**
      * 詳細画面を表示する
      * @throws ServletException
@@ -141,5 +142,29 @@ public class DiaryAction extends ActionBase {
 
             forward(ForwardConst.FW_DIA_SHOW);
         }
+    }
+
+    /**
+     * 編集画面を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void edit() throws ServletException, IOException {
+        //idを条件に日報データを取得する
+        DiaryView rv = service.findOne(toNumber(getRequestParam(AttributeConst.DIA_ID)));
+
+        if (rv == null) {
+            //該当の日報データが存在しない場合はエラー画面を表示
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+
+        } else {
+
+            putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+            putRequestScope(AttributeConst.DIARY, rv); //取得した日報データ
+
+            //編集画面を表示
+            forward(ForwardConst.FW_DIA_EDIT);
+        }
+
     }
 }
