@@ -14,7 +14,7 @@ import constants.MessageConst;
 import services.DiaryService;
 
 /**
- * 日報に関する処理を行うActionクラス
+ * 日記に関する処理を行うActionクラス
  *
  */
 public class DiaryAction extends ActionBase {
@@ -82,7 +82,7 @@ public class DiaryAction extends ActionBase {
     public void create() throws ServletException, IOException {
         //CSRF対策 tokenのチェック
         if (checkToken()) {
-            //日報の日付が入力されていなければ、今日の日付を設定
+            //日記の日付が入力されていなければ、今日の日付を設定
             LocalDate day = null;
             if (getRequestParam(AttributeConst.DIA_DATE) == null
                     || getRequestParam(AttributeConst.DIA_DATE).equals("")) {
@@ -90,23 +90,24 @@ public class DiaryAction extends ActionBase {
             } else {
                 day = LocalDate.parse(getRequestParam(AttributeConst.DIA_DATE));
             }
-            //パラメータの値をもとに日報情報のインスタンスを作成する
+
+            //パラメータの値をもとに日記情報のインスタンスを作成する
             DiaryView rv = new DiaryView(
                     null,
-                    null,
+                    getRequestParam(AttributeConst.DIA_NAME),
                     day,
                     getRequestParam(AttributeConst.DIA_TITLE),
                     getRequestParam(AttributeConst.DIA_CONTENT),
                     null,
                     null);
-            //日報情報登録
+            //日記情報登録
             List<String> errors = service.create(rv);
 
             if (errors.size() > 0) {
                 //登録中にエラーがあった場合
 
                 putRequestScope(AttributeConst.TOKEN, getTokenId());//CSRF対策用トークン
-                putRequestScope(AttributeConst.DIARY, rv);//入力された日報情報
+                putRequestScope(AttributeConst.DIARY, rv);//入力された日記情報
                 putRequestScope(AttributeConst.ERR, errors);//エラーのリスト
 
                 //新規登録画面を再表示
@@ -130,16 +131,16 @@ public class DiaryAction extends ActionBase {
      */
     public void show() throws ServletException, IOException {
 
-        //
+        //idを条件に日記データを取得する
         DiaryView rv = service.findOne(toNumber(getRequestParam(AttributeConst.DIA_ID)));
 
         if (rv == null) {
-            //
+            //該当の日記データが存在しない場合はエラー画面を表示
             forward(ForwardConst.FW_ERR_UNKNOWN);
 
         } else {
-            putRequestScope(AttributeConst.DIARY, rv);
-
+            putRequestScope(AttributeConst.DIARY, rv);//取得した日記データ
+          //詳細画面を表示
             forward(ForwardConst.FW_DIA_SHOW);
         }
     }

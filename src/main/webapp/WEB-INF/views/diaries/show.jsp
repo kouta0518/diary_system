@@ -40,7 +40,7 @@
             </tbody>
         </table>
             <p>
-                <a href="<c:url value='?action=${actRep}&command=${commEdt}&id=${report.id}' />">この日記を編集する</a>
+                <a href="<c:url value='?action=${actRep}&command=${commEdt}&id=${diary.id}' />">この日記を編集する</a>
             </p>
 
         <p>

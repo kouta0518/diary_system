@@ -19,6 +19,7 @@
 
 <label for="name">氏名</label><br />
 <c:out value="${sessionScope.login_name}" />
+<input type="text" name="name" value="<c:out value="${diary.name}" />">
 <br /><br />
 
 <label for="${AttributeConst.DIA_TITLE.getValue()}">タイトル</label><br />

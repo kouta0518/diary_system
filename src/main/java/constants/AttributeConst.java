@@ -31,6 +31,7 @@ public enum AttributeConst {
     DIA_COUNT("diaries_count"),
     DIA_ID("id"),
     DIA_DATE("diary_date"),
+    DIA_NAME("name"),
     DIA_TITLE("title"),
     DIA_CONTENT("content");
 
