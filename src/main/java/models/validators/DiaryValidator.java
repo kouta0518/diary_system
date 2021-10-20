@@ -6,7 +6,7 @@ import actions.views.DiaryView;
 import constants.MessageConst;
 
 /**
- * 日報インスタンスに設定されている値のバリデーションを行うクラス
+ * 日記インスタンスに設定されている値のバリデーションを行うクラス
  */
 public class DiaryValidator {
     /**
@@ -16,6 +16,12 @@ public class DiaryValidator {
      */
     public static List<String> validate(DiaryView rv) {
         List<String> errors = new ArrayList<String>();
+        //名前のチェック
+        String nameError = validateName(rv.getName());
+        if (!nameError.equals("")) {
+            errors.add(nameError);
+        }
+
         //タイトルチェック
         String titleError = validateTitle(rv.getTitle());
         if (!titleError.equals("")) {
@@ -30,6 +36,19 @@ public class DiaryValidator {
 
         return errors;
     }
+    /**
+     * 名前に入力値があるかをチェックし、入力値がなければエラーメッセージを返却
+     * @param name タイトル
+     * @return エラーメッセージ
+     */
+    private static String validateName(String name) {
+        if (name == null || name.equals("")) {
+            return MessageConst.E_NONAME.getMessage();
+        }
+        //入力がある場合は空文字を返却
+        return "";
+    }
+
 
     /**
      * タイトルに入力値があるかをチェックし、入力値がなければエラーメッセージを返却
