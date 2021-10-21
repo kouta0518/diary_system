@@ -11,25 +11,25 @@ import constants.MessageConst;
 public class DiaryValidator {
     /**
      * 日記インスタンスの各項目についてバリデーションを行う
-     * @param rv 日記インスタンス
+     * @param dv 日記インスタンス
      * @return エラーのリスト
      */
-    public static List<String> validate(DiaryView rv) {
+    public static List<String> validate(DiaryView dv) {
         List<String> errors = new ArrayList<String>();
         //名前のチェック
-        String nameError = validateName(rv.getName());
+        String nameError = validateName(dv.getName());
         if (!nameError.equals("")) {
             errors.add(nameError);
         }
 
         //タイトルチェック
-        String titleError = validateTitle(rv.getTitle());
+        String titleError = validateTitle(dv.getTitle());
         if (!titleError.equals("")) {
             errors.add(titleError);
         }
 
         //内容のチェック
-        String contentError = validateContent(rv.getContent());
+        String contentError = validateContent(dv.getContent());
         if (!contentError.equals("")) {
             errors.add(contentError);
         }
@@ -48,8 +48,6 @@ public class DiaryValidator {
         //入力がある場合は空文字を返却
         return "";
     }
-
-
     /**
      * タイトルに入力値があるかをチェックし、入力値がなければエラーメッセージを返却
      * @param title タイトル

@@ -17,9 +17,8 @@
 <input type="date" name="${AttributeConst.DIA_DATE.getValue()}" value="<fmt:formatDate value='${diaryDay}' pattern='yyyy-MM-dd' />" />
 <br /><br />
 
-<label for="name">氏名</label><br />
-<c:out value="${sessionScope.login_name}" />
-<input type="text" name="name" value="<c:out value="${diary.name}" />">
+<label for="${AttributeConst.DIA_NAME.getValue()}">名前</label><br />
+<input type="text" name="${AttributeConst.DIA_NAME.getValue()}" value="${diary.name}" />
 <br /><br />
 
 <label for="${AttributeConst.DIA_TITLE.getValue()}">タイトル</label><br />

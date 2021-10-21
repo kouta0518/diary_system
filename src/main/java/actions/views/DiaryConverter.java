@@ -10,37 +10,37 @@ import models.Diary;
 public class DiaryConverter {
     /**
      * ViewモデルのインスタンスからDTOモデルのインスタンスを作成する
-     * @param rv DiaryViewのインスタンス
+     * @param dv DiaryViewのインスタンス
      * @return Diaryのインスタンス
      */
-    public static Diary toModel(DiaryView rv) {
+    public static Diary toModel(DiaryView dv) {
         return new Diary(
-                rv.getId(),
-                rv.getName(),
-                rv.getDiaryDate(),
-                rv.getTitle(),
-                rv.getContent(),
-                rv.getCreatedAt(),
-                rv.getUpdatedAt());
+                dv.getId(),
+                dv.getName(),
+                dv.getDiaryDate(),
+                dv.getTitle(),
+                dv.getContent(),
+                dv.getCreatedAt(),
+                dv.getUpdatedAt());
     }
     /**
      * DTOモデルのインスタンスからViewモデルのインスタンスを作成する
-     * @param r Diaryのインスタンス
+     * @param d Diaryのインスタンス
      * @return DiaryViewのインスタンス
      */
-    public static DiaryView toView(Diary r) {
-        if(r == null) {
+    public static DiaryView toView(Diary d) {
+        if(d == null) {
             return null;
         }
 
         return new DiaryView(
-                r.getId(),
-                r.getName(),
-                r.getDiaryDate(),
-                r.getTitle(),
-                r.getContent(),
-                r.getCreatedAt(),
-                r.getUpdatedAt());
+                d.getId(),
+                d.getName(),
+                d.getDiaryDate(),
+                d.getTitle(),
+                d.getContent(),
+                d.getCreatedAt(),
+                d.getUpdatedAt());
     }
     /**
      * DTOモデルのリストからViewモデルのリストを作成する
@@ -50,36 +50,36 @@ public class DiaryConverter {
     public static List<DiaryView> toViewList(List<Diary> list) {
         List<DiaryView> evs = new ArrayList<>();
 
-        for (Diary r : list) {
-            evs.add(toView(r));
+        for (Diary d : list) {
+            evs.add(toView(d));
         }
         return evs;
     }
     /**
      * Viewモデルの全フィールドの内容をDTOモデルのフィールドにコピーする
-     * @param r DTOモデル(コピー先)
-     * @param rv Viewモデル(コピー元)
+     * @param d DTOモデル(コピー先)
+     * @param dv Viewモデル(コピー元)
      */
-    public static void copyViewToModel(Diary r, DiaryView rv) {
-        r.setId(rv.getId());
-        r.setName(rv.getName());
-        r.setDiaryDate(rv.getDiaryDate());
-        r.setTitle(rv.getTitle());
-        r.setContent(rv.getContent());
-        r.setCreatedAt(rv.getCreatedAt());
-        r.setUpdatedAt(rv.getUpdatedAt());
+    public static void copyViewToModel(Diary d, DiaryView dv) {
+        d.setId(dv.getId());
+        d.setName(dv.getName());
+        d.setDiaryDate(dv.getDiaryDate());
+        d.setTitle(dv.getTitle());
+        d.setContent(dv.getContent());
+        d.setCreatedAt(dv.getCreatedAt());
+        d.setUpdatedAt(dv.getUpdatedAt());
 }
     /**
      * DTOモデルの全フィールドの内容をViewモデルのフィールドにコピーする
-     * @param r DTOモデル(コピー元)
-     * @param rv Viewモデル(コピー先)
+     * @param d DTOモデル(コピー元)
+     * @param dv Viewモデル(コピー先)
      */
-    public static void copyModelToView(Diary r, DiaryView rv) {
-        rv.setId(r.getId());
-        rv.setName(r.getName());
-        rv.setDiaryDate(r.getDiaryDate());
-        rv.setTitle(r.getTitle());
-        rv.setCreatedAt(r.getCreatedAt());
-        rv.setUpdatedAt(r.getUpdatedAt());
+    public static void copyModelToView(Diary d, DiaryView dv) {
+        dv.setId(d.getId());
+        dv.setName(d.getName());
+        dv.setDiaryDate(d.getDiaryDate());
+        dv.setTitle(d.getTitle());
+        dv.setCreatedAt(d.getCreatedAt());
+        dv.setUpdatedAt(d.getUpdatedAt());
     }
 }

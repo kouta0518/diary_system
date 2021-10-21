@@ -48,13 +48,13 @@ public class DiaryService extends ServiceBase {
      * @param rv 日記の登録内容
      * @return バリデーションで発生したエラーのリスト
      */
-    public List<String> create(DiaryView rv) {
-        List<String> errors = DiaryValidator.validate(rv);
+    public List<String> create(DiaryView dv) {
+        List<String> errors = DiaryValidator.validate(dv);
         if (errors.size() == 0) {
             LocalDateTime ldt = LocalDateTime.now();
-            rv.setCreatedAt(ldt);
-            rv.setUpdatedAt(ldt);
-            createInternal(rv);
+            dv.setCreatedAt(ldt);
+            dv.setUpdatedAt(ldt);
+            createInternal(dv);
         }
 
         //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
@@ -63,21 +63,21 @@ public class DiaryService extends ServiceBase {
 
     /**
      * 画面から入力された日記の登録内容を元に、日記データを更新する
-     * @param rv 日記の更新内容
+     * @param dv 日記の更新内容
      * @return バリデーションで発生したエラーのリスト
      */
-    public List<String> update(DiaryView rv) {
+    public List<String> update(DiaryView dv) {
 
         //バリデーションを行う
-        List<String> errors = DiaryValidator.validate(rv);
+        List<String> errors = DiaryValidator.validate(dv);
 
         if (errors.size() == 0) {
 
             //更新日時を現在時刻に設定
             LocalDateTime ldt = LocalDateTime.now();
-            rv.setUpdatedAt(ldt);
+            dv.setUpdatedAt(ldt);
 
-            updateInternal(rv);
+            updateInternal(dv);
         }
 
         //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
@@ -95,25 +95,25 @@ public class DiaryService extends ServiceBase {
 
     /**
      * 日記データを1件登録する
-     * @param rv 日記データ
+     * @param dv 日記データ
      */
-    private void createInternal(DiaryView rv) {
+    private void createInternal(DiaryView dv) {
 
         em.getTransaction().begin();
-        em.persist(DiaryConverter.toModel(rv));
+        em.persist(DiaryConverter.toModel(dv));
         em.getTransaction().commit();
 
     }
 
     /**
      * 日記データを更新する
-     * @param rv 日記データ
+     * @param dv 日記データ
      */
-    private void updateInternal(DiaryView rv) {
+    private void updateInternal(DiaryView dv) {
 
         em.getTransaction().begin();
-        Diary r = findOneInternal(rv.getId());
-        DiaryConverter.copyViewToModel(r, rv);
+        Diary d = findOneInternal(dv.getId());
+        DiaryConverter.copyViewToModel(d, dv);
         em.getTransaction().commit();
 
     }

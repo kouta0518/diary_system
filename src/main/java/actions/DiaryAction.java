@@ -67,9 +67,9 @@ public class DiaryAction extends ActionBase {
     public void entryNew() throws ServletException, IOException {
         putRequestScope(AttributeConst.TOKEN, getTokenId());
 
-        DiaryView rv = new DiaryView();
-        rv.setDiaryDate(LocalDate.now());
-        putRequestScope(AttributeConst.DIARY, rv);
+        DiaryView dv = new DiaryView();
+        dv.setDiaryDate(LocalDate.now());
+        putRequestScope(AttributeConst.DIARY, dv);
 
         forward(ForwardConst.FW_DIA_NEW);
     }
@@ -92,7 +92,7 @@ public class DiaryAction extends ActionBase {
             }
 
             //パラメータの値をもとに日記情報のインスタンスを作成する
-            DiaryView rv = new DiaryView(
+            DiaryView dv = new DiaryView(
                     null,
                     getRequestParam(AttributeConst.DIA_NAME),
                     day,
@@ -101,13 +101,13 @@ public class DiaryAction extends ActionBase {
                     null,
                     null);
             //日記情報登録
-            List<String> errors = service.create(rv);
+            List<String> errors = service.create(dv);
 
             if (errors.size() > 0) {
                 //登録中にエラーがあった場合
 
                 putRequestScope(AttributeConst.TOKEN, getTokenId());//CSRF対策用トークン
-                putRequestScope(AttributeConst.DIARY, rv);//入力された日記情報
+                putRequestScope(AttributeConst.DIARY, dv);//入力された日記情報
                 putRequestScope(AttributeConst.ERR, errors);//エラーのリスト
 
                 //新規登録画面を再表示
@@ -132,14 +132,14 @@ public class DiaryAction extends ActionBase {
     public void show() throws ServletException, IOException {
 
         //idを条件に日記データを取得する
-        DiaryView rv = service.findOne(toNumber(getRequestParam(AttributeConst.DIA_ID)));
+        DiaryView dv = service.findOne(toNumber(getRequestParam(AttributeConst.DIA_ID)));
 
-        if (rv == null) {
+        if (dv == null) {
             //該当の日記データが存在しない場合はエラー画面を表示
             forward(ForwardConst.FW_ERR_UNKNOWN);
 
         } else {
-            putRequestScope(AttributeConst.DIARY, rv);//取得した日記データ
+            putRequestScope(AttributeConst.DIARY, dv);//取得した日記データ
           //詳細画面を表示
             forward(ForwardConst.FW_DIA_SHOW);
         }
@@ -152,16 +152,16 @@ public class DiaryAction extends ActionBase {
      */
     public void edit() throws ServletException, IOException {
         //idを条件に日報データを取得する
-        DiaryView rv = service.findOne(toNumber(getRequestParam(AttributeConst.DIA_ID)));
+        DiaryView dv = service.findOne(toNumber(getRequestParam(AttributeConst.DIA_ID)));
 
-        if (rv == null) {
+        if (dv == null) {
             //該当の日報データが存在しない場合はエラー画面を表示
             forward(ForwardConst.FW_ERR_UNKNOWN);
 
         } else {
 
             putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-            putRequestScope(AttributeConst.DIARY, rv); //取得した日報データ
+            putRequestScope(AttributeConst.DIARY, dv); //取得した日報データ
 
             //編集画面を表示
             forward(ForwardConst.FW_DIA_EDIT);
@@ -177,18 +177,20 @@ public class DiaryAction extends ActionBase {
         //CSRF対策 tokenのチェック
         if (checkToken()) {
             //idを条件に日記データを取得する
-            DiaryView rv = service.findOne(toNumber(getRequestParam(AttributeConst.DIA_ID)));
+            DiaryView dv = service.findOne(toNumber(getRequestParam(AttributeConst.DIA_ID)));
             //入力された日記内容を設定する
-            rv.setDiaryDate(toLocalDate(getRequestParam(AttributeConst.DIA_DATE)));
-            rv.setTitle(getRequestParam(AttributeConst.DIA_TITLE));
-            rv.setContent(getRequestParam(AttributeConst.DIA_CONTENT));
+            dv.setName(getRequestParam(AttributeConst.DIA_NAME));
+            dv.setDiaryDate(toLocalDate(getRequestParam(AttributeConst.DIA_DATE)));
+            dv.setTitle(getRequestParam(AttributeConst.DIA_TITLE));
+            dv.setContent(getRequestParam(AttributeConst.DIA_CONTENT));
+
             //日記データを更新する
-            List<String> errors = service.update(rv);
+            List<String> errors = service.update(dv);
 
             if (errors.size() > 0) {
                 //更新中にエラーが発生した場合
                 putRequestScope(AttributeConst.TOKEN, getTokenId());//CSRF対策用トークン
-                putRequestScope(AttributeConst.DIARY, rv);//入力された日記情報
+                putRequestScope(AttributeConst.DIARY, dv);//入力された日記情報
                 putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
                 //編集画面を再表示
                 forward(ForwardConst.FW_DIA_EDIT);
