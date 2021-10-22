@@ -21,7 +21,9 @@ public class DiaryConverter {
                 dv.getTitle(),
                 dv.getContent(),
                 dv.getCreatedAt(),
-                dv.getUpdatedAt());
+                dv.getUpdatedAt(),
+                dv.getDeleteFlag());
+
     }
     /**
      * DTOモデルのインスタンスからViewモデルのインスタンスを作成する
@@ -40,7 +42,8 @@ public class DiaryConverter {
                 d.getTitle(),
                 d.getContent(),
                 d.getCreatedAt(),
-                d.getUpdatedAt());
+                d.getUpdatedAt(),
+                d.getDeleteFlag());
     }
     /**
      * DTOモデルのリストからViewモデルのリストを作成する

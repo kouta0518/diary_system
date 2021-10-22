@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="constants.ForwardConst" %>
 
-<c:set var="actRep" value="${ForwardConst.ACT_DIA.getValue()}" />
+<c:set var="actDia" value="${ForwardConst.ACT_DIA.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commEdt" value="${ForwardConst.CMD_EDIT.getValue()}" />
 
@@ -40,11 +40,11 @@
             </tbody>
         </table>
             <p>
-                <a href="<c:url value='?action=${actRep}&command=${commEdt}&id=${diary.id}' />">この日記を編集する</a>
+                <a href="<c:url value='?action=${actDia}&command=${commEdt}&id=${diary.id}' />">この日記を編集する</a>
             </p>
 
         <p>
-            <a href="<c:url value='?action=${actRep}&command=${commIdx}' />">一覧に戻る</a>
+            <a href="<c:url value='?action=${actDia}&command=${commIdx}' />">一覧に戻る</a>
         </p>
     </c:param>
 </c:import>

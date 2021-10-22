@@ -83,4 +83,9 @@ public class Diary {
     @Column(name = JpaConst.DIA_COL_UPDATED_AT, nullable = false)
     private LocalDateTime updatedAt;
 
+    /**
+     * 削除されたかどうか（現役：0、削除済み：1）
+     */
+    @Column(name = JpaConst.DIA_COL_DELETE_FLAG, nullable = false)
+    private Integer deleteFlag;
 }

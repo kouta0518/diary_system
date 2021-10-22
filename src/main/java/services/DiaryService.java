@@ -117,4 +117,24 @@ public class DiaryService extends ServiceBase {
         em.getTransaction().commit();
 
     }
+    /**
+     * idを条件を論理削除する
+     * @param id
+     */
+    public void destroy(Integer id) {
+
+        //idを条件に登録済み取得する
+        DiaryView savedDia = findOne(id);
+
+        //更新日時に現在時刻を設定する
+        LocalDateTime today = LocalDateTime.now();
+        savedDia.setUpdatedAt(today);
+
+        //論理削除フラグをたてる
+        savedDia.setDeleteFlag(JpaConst.DIA_DEL_TRUE);
+
+        //更新処理を行う
+        update(savedDia);
+
+    }
 }

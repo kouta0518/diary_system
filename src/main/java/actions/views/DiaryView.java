@@ -51,4 +51,8 @@ public class DiaryView {
      * 更新日時
      */
     private LocalDateTime updatedAt;
+    /**
+     * 削除されたかどうか（現役：0、削除済み：1）
+     */
+    private Integer deleteFlag;
 }

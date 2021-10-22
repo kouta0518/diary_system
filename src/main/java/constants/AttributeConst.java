@@ -33,7 +33,8 @@ public enum AttributeConst {
     DIA_DATE("diary_date"),
     DIA_NAME("name"),
     DIA_TITLE("title"),
-    DIA_CONTENT("content");
+    DIA_CONTENT("content"),
+    DIA_DESTROY("destroy");
 
     private final String text;
     private final Integer i;

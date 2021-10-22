@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="constants.ForwardConst" %>
 
-<c:set var="actRep" value="${ForwardConst.ACT_DIA.getValue()}" />
+<c:set var="actDia" value="${ForwardConst.ACT_DIA.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
@@ -31,7 +31,7 @@
                         <td class="diaries_name"><c:out value="${diary.name}" /></td>
                         <td class="diaries_date"><fmt:formatDate value='${diaryDay}' pattern='yyyy-MM-dd' /></td>
                         <td class="diaries_title">${diary.title}</td>
-                        <td class="diaries_action"><a href="<c:url value='?action=${actRep}&command=${commShow}&id=${diary.id}' />">詳細を見る</a></td>
+                        <td class="diaries_action"><a href="<c:url value='?action=${actDia}&command=${commShow}&id=${diary.id}' />">詳細を見る</a></td>
                     </tr>
                 </c:forEach>
             </tbody>
@@ -45,12 +45,12 @@
                         <c:out value="${i}" />&nbsp;
                     </c:when>
                     <c:otherwise>
-                        <a href="<c:url value='?action=${actRep}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>&nbsp;
+                        <a href="<c:url value='?action=${actDia}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>&nbsp;
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
         </div>
-        <p><a href="<c:url value='?action=${actRep}&command=${commNew}' />">新規日報の登録</a></p>
+        <p><a href="<c:url value='?action=${actDia}&command=${commNew}' />">新規日報の登録</a></p>
 
     </c:param>
 </c:import>

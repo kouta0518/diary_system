@@ -14,6 +14,8 @@ public interface JpaConst {
 
     int ROLE_ADMIN = 1; //管理者権限ON(管理者)
     int ROLE_GENERAL = 0; //管理者権限OFF(一般)
+    int DIA_DEL_TRUE = 1; //削除フラグON(削除済み)
+    int DIA_DEL_FALSE = 0; //削除フラグOFF(現役)
 
     //日報テーブル
     String TABLE_DIA = "diaries"; //テーブル名
@@ -25,6 +27,7 @@ public interface JpaConst {
     String DIA_COL_CONTENT = "content"; //日記の内容
     String DIA_COL_CREATED_AT = "created_at"; //登録日時
     String DIA_COL_UPDATED_AT = "updated_at"; //更新日時
+    String DIA_COL_DELETE_FLAG = "delete_flag"; //削除フラグ
 
     //Entity名
     String ENTITY_DIA = "diary"; //日記

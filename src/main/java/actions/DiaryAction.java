@@ -99,6 +99,7 @@ public class DiaryAction extends ActionBase {
                     getRequestParam(AttributeConst.DIA_TITLE),
                     getRequestParam(AttributeConst.DIA_CONTENT),
                     null,
+                    null,
                     null);
             //日記情報登録
             List<String> errors = service.create(dv);
@@ -202,6 +203,25 @@ public class DiaryAction extends ActionBase {
                 //一覧画面にリダイレクト
                 redirect(ForwardConst.ACT_DIA, ForwardConst.CMD_INDEX);
             }
+        }
+    }
+    /**
+     * 論理削除を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void destroy() throws ServletException, IOException {
+        //CSRF対策 tokenのチェック
+        if (checkToken()) {
+
+            //idを条件に従業員データを論理削除する
+            service.destroy(toNumber(getRequestParam(AttributeConst.DIA_ID)));
+
+            //セッションに削除完了のフラッシュメッセージを設定
+            putSessionScope(AttributeConst.FLUSH, MessageConst.I_DELETED.getMessage());
+
+            //一覧画面にリダイレクト
+            redirect(ForwardConst.ACT_DIA, ForwardConst.CMD_INDEX);
         }
     }
 }
