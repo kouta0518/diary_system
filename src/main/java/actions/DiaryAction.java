@@ -184,6 +184,7 @@ public class DiaryAction extends ActionBase {
             dv.setDiaryDate(toLocalDate(getRequestParam(AttributeConst.DIA_DATE)));
             dv.setTitle(getRequestParam(AttributeConst.DIA_TITLE));
             dv.setContent(getRequestParam(AttributeConst.DIA_CONTENT));
+            dv.setDeleteFlag(getRequestParam(AttributeConst.DEL_FLAG_FALSE));
 
             //日記データを更新する
             List<String> errors = service.update(dv);

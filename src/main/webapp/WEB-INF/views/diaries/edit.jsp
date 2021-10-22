@@ -15,7 +15,7 @@
         </form>
 
             <p><a href="#" onclick="confirmDestroy();">このメッセージを削除する</a></p>
-        <form method="POST" action="<c:url value='?action=${actRep}&command=${commDel}' />">
+        <form method="POST" action="<c:url value='?action=${actDia}&command=${commDel}' />">
         <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
         </form>
         <script>
