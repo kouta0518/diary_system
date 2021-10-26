@@ -2,7 +2,7 @@ package constants;
 
 /**
  * DB関連の項目値を定義するインターフェース
- * ※インターフェイスに定義した変数は public static final 修飾子がついているとみなされる
+ * ※インターフェイスに定義した変数は public static final 修飾子がついているとみなされる、明示的な修飾子の記述は不要です。
  */
 public interface JpaConst {
 

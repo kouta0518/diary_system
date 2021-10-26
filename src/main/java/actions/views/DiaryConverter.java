@@ -2,6 +2,8 @@ package actions.views;
 import java.util.ArrayList;
 import java.util.List;
 
+import constants.AttributeConst;
+import constants.JpaConst;
 import models.Diary;
 /**
  * 日記データのDTOモデル⇔Viewモデルの変換を行うクラス
@@ -22,7 +24,11 @@ public class DiaryConverter {
                 dv.getContent(),
                 dv.getCreatedAt(),
                 dv.getUpdatedAt(),
-                dv.getDeleteFlag());
+                dv.getDeleteFlag() == null
+                ? null
+                : dv.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()
+                      ? JpaConst.DIA_DEL_TRUE
+                      : JpaConst.DIA_DEL_FALSE);
 
     }
     /**
@@ -43,7 +49,11 @@ public class DiaryConverter {
                 d.getContent(),
                 d.getCreatedAt(),
                 d.getUpdatedAt(),
-                d.getDeleteFlag());
+                d.getDeleteFlag() == null
+                    ? null
+                    : d.getDeleteFlag() == JpaConst.DIA_DEL_TRUE
+                            ? AttributeConst.DEL_FLAG_TRUE.getIntegerValue()
+                            : AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
     }
     /**
      * DTOモデルのリストからViewモデルのリストを作成する
@@ -71,6 +81,7 @@ public class DiaryConverter {
         d.setContent(dv.getContent());
         d.setCreatedAt(dv.getCreatedAt());
         d.setUpdatedAt(dv.getUpdatedAt());
+        d.setDeleteFlag(dv.getDeleteFlag());
 }
     /**
      * DTOモデルの全フィールドの内容をViewモデルのフィールドにコピーする
@@ -82,7 +93,9 @@ public class DiaryConverter {
         dv.setName(d.getName());
         dv.setDiaryDate(d.getDiaryDate());
         dv.setTitle(d.getTitle());
+        dv.setContent(d.getContent());
         dv.setCreatedAt(d.getCreatedAt());
         dv.setUpdatedAt(d.getUpdatedAt());
+        dv.setDeleteFlag(d.getDeleteFlag());
     }
 }

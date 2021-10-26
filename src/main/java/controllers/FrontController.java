@@ -23,6 +23,10 @@ public class FrontController extends HttpServlet {
 
     public FrontController() {
         super();
+        /**
+        * あるクラスをインスタンス化する際には、何もしなくとも親クラスのコンストラクタが勝手に呼ばれるようになっているわけですが、勝手に呼ばせるのではなく、自分でコーディングすることで親クラスのコンストラクタを呼ぶことも出来ます。それがsuper( )です
+        * コンストラクタの一行目です。限定です。それ以外の場所にsuper( )を書くとコンパイルエラーになります。
+        */
     }
 
     /**
@@ -52,7 +56,7 @@ public class FrontController extends HttpServlet {
 
     /**
      * リクエストパラメータの値から該当するActionクラスのインスタンスを作成し、返却する
-     * (例:パラメータが action=Employee の場合、actions.EmployeeActionオブジェクト)
+     * (例:パラメータが action=Diary の場合、actions.DiaryActionオブジェクト)
      * @param request リクエスト
      * @param response レスポンス
      * @return
@@ -63,15 +67,20 @@ public class FrontController extends HttpServlet {
         ActionBase action = null;
         try {
 
-            //リクエストからパラメータ"action"の値を取得 (例:"Employee"、"Report")
+            //リクエストからパラメータ"action"の値を取得
             String actionString = request.getParameter(ForwardConst.ACT.getValue());
 
-            //該当するActionオブジェクトを作成 (例:リクエストからパラメータ action=Employee の場合、actions.EmployeeActionオブジェクト)
+            //該当するActionオブジェクトを作成 (例:リクエストからパラメータ action=Diary の場合、actions.DiaryActionオブジェクト)
+            // "actions.DiaryAction"という文字列から actionsパッケージにある DiaryActionというクラス型を取得していることに他なりません。
+            //forNameは、クラス名を元にそのクラスのインスタンスを作成するメソッドです
             type = Class.forName(String.format("actions.%sAction", actionString));
-
-            //ActionBaseのオブジェクトにキャスト(例:actions.EmployeeActionオブジェクト→actions.ActionBaseオブジェクト)
+/**
+ * http://localhost:8080/diary_system/?action=Diary&command=index
+というURLにアクセスすると、クエリパラメータにより actionというキーワードに紐づいて Diaryという値が飛んできてそれを取得しています。クエリーパラメータはURLに付け加える情報。
+ */
+            //ActionBaseのオブジェクトにキャスト(例:actions.DiaryActionオブジェクト→actions.ActionBaseオブジェクト)
             action = (ActionBase) (type.asSubclass(ActionBase.class)
-                    .getDeclaredConstructor()
+                    .getDeclaredConstructor()//その型に対応したクラスのインスタンスを生成している箇所です。リフレクションという。
                     .newInstance());
 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SecurityException

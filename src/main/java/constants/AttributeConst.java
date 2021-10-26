@@ -1,5 +1,6 @@
 package constants;
-
+//画面の項目値等を定義する
+//Enumクラス、これは列挙型で定数をまとめて管理できるということ
 public enum AttributeConst {
   //フラッシュメッセージ
     FLUSH("flush"),

@@ -23,6 +23,7 @@ public abstract class ActionBase {
     /**
      * 初期化処理
      * サーブレットコンテキスト、リクエスト、レスポンスをクラスフィールドに設定
+     * 各クラスフィールドの値を設定します。
      * @param servletContext
      * @param servletRequest
      * @param servletResponse
@@ -37,14 +38,14 @@ public abstract class ActionBase {
     }
 
     /**
-     * フロントコントローラから呼び出されるメソッド
+     * フロントコントローラから直接呼び出されるメソッドです。各サブクラスで内容を実装します。
      * @throws ServletException
      * @throws IOException
      */
     public abstract void process() throws ServletException, IOException;
 
     /**
-     * パラメータのcommandの値に該当するメソッドを実行する
+     * パラメータのcommandの値に該当するメソッドを実行します。commandの値が不正の場合はエラー画面を呼び出します。
      * @throws ServletException
      * @throws IOException
      */
@@ -57,8 +58,12 @@ public abstract class ActionBase {
             //パラメータからcommandを取得
             String command = request.getParameter(ForwardConst.CMD.getValue());
 
-            //ommandに該当するメソッドを実行する
-            //(例: action=Employee command=show の場合 EmployeeActionクラスのshow()メソッドを実行する)
+            /**
+            * commandに該当するメソッドを実行する
+            *(例: action=Diary command=show の場合 DiaryActionクラスのshow()メソッドを実行する)
+            *このメソッドの第一引数に与える文字列がメソッドの名前です。第二引数はメソッドの引数です。引数がない場合は new Class[0] と記述します。
+            *this.getClass().getDeclaredMethod("index", new Class[0]);と記述すると、thisが表すクラスの index() メソッド、という意味
+            */
             commandMethod = this.getClass().getDeclaredMethod(command, new Class[0]);
             commandMethod.invoke(this, new Object[0]); //メソッドに渡す引数はなし
 
@@ -81,7 +86,7 @@ public abstract class ActionBase {
      */
     protected void forward(ForwardConst target) throws ServletException, IOException {
 
-        //jspファイルの相対パスを作成
+        //jspファイルの相対パスを作成、jspファイルの存在する場所を示す文字列
         String forward = String.format("/WEB-INF/views/%s.jsp", target.getValue());
         RequestDispatcher dispatcher = request.getRequestDispatcher(forward);
 
@@ -119,7 +124,7 @@ public abstract class ActionBase {
      */
     protected boolean checkToken() throws ServletException, IOException {
 
-        //パラメータからtokenの値を取得
+        //パラメータからtokenの値を取得、トークンとは、パラメータの参照IDで、レポートに対してURLを生成する際に使用されます
         String _token = getRequestParam(AttributeConst.TOKEN);
 
         if (_token == null || !(_token.equals(getTokenId()))) {
@@ -136,6 +141,7 @@ public abstract class ActionBase {
 
     /**
      * セッションIDを取得する
+     * セッションIDとは、Webアプリケーションなどで、通信中の利用者を識別して行動を捕捉し、利用者ごとに一貫したサービスを提供するために付与される固有の識別情報。
      * @return セッションID
      */
     protected String getTokenId() {
@@ -144,6 +150,8 @@ public abstract class ActionBase {
 
     /**
      * リクエストから表示を要求されているページ数を取得し、返却する
+     * 一覧表示のページネーションで利用します。
+     * ページネイションとは、検索結果一覧やカテゴリ一覧などのリスト化された縦長ページを複数ページに分割する機能のこと
      * @return 要求されているページ数(要求がない場合は1)
      */
     protected int getPage() {
@@ -192,19 +200,21 @@ public abstract class ActionBase {
     }
 
     /**
-     * リクエストスコープにパラメータを設定する
+     * リクエストスコープにパラメータを設定する、リクエストスコープとはリクエスト内でのみ使用できる情報、もしくはその「範囲」。
+     * 第2引数の型Vはジェネリクス（Generics・総称型）というものです。与えた引数の型がこのVにあたる、という意味です。すべての型を引数にとることができます。
      * @param key パラメータ名
      * @param value パラメータの値
-     */
+     */ //Genericsとは、クラス、インターフェース、メソッドなどの「型」を「パラメータとして定義する」ことを可能にしたものです
     protected <V> void putRequestScope(AttributeConst key, V value) {
         request.setAttribute(key.getValue(), value);
     }
 
     /**
      * セッションスコープから指定されたパラメータの値を取得し、返却する
+     * リクエスト後も情報を残したい場合にはセッションに情報を保存する。この情報のスコープは「セッションスコープ」となる。
      * @param key パラメータ名
      * @return パラメータの値
-     */
+     */  //セッションにはあらゆる型のオブジェクトを格納できます
     @SuppressWarnings("unchecked")
     protected <R> R getSessionScope(AttributeConst key) {
         return (R) request.getSession().getAttribute(key.getValue());
