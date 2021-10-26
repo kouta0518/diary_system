@@ -100,7 +100,7 @@ public class DiaryAction extends ActionBase {
                     getRequestParam(AttributeConst.DIA_CONTENT),
                     null,
                     null,
-                    null);
+                    AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
             //日記情報登録
             List<String> errors = service.create(dv);
 
@@ -184,7 +184,7 @@ public class DiaryAction extends ActionBase {
             dv.setDiaryDate(toLocalDate(getRequestParam(AttributeConst.DIA_DATE)));
             dv.setTitle(getRequestParam(AttributeConst.DIA_TITLE));
             dv.setContent(getRequestParam(AttributeConst.DIA_CONTENT));
-            dv.setDeleteFlag(getRequestParam(AttributeConst.DEL_FLAG_FALSE));
+            dv.setDeleteFlag(toNumber(getRequestParam(AttributeConst.DEL_FLAG_FALSE)));
 
             //日記データを更新する
             List<String> errors = service.update(dv);

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="constants.ForwardConst" %>
+<%@ page import="constants.AttributeConst" %>
 
 <c:set var="actDia" value="${ForwardConst.ACT_DIA.getValue()}" />
 <c:set var="commUpd" value="${ForwardConst.CMD_UPDATE.getValue()}" />
@@ -17,6 +18,7 @@
             <p><a href="#" onclick="confirmDestroy();">このメッセージを削除する</a></p>
         <form method="POST" action="<c:url value='?action=${actDia}&command=${commDel}' />">
         <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
+        <input type="hidden" name="${AttributeConst.DIA_ID.getValue()}" value="${diary.id}" />
         </form>
         <script>
          function confirmDestroy() {

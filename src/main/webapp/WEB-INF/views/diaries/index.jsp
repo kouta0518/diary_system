@@ -2,13 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="constants.ForwardConst" %>
-
+<%@ page import="constants.AttributeConst" %>
+<%--<c:set> で、そのJSP内で利用する変数を定義します。var に変数名、 value に変数の中に代入したい値 --%>
 <c:set var="actDia" value="${ForwardConst.ACT_DIA.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
+<%--<c:import> と <c:param> を利用することで、共通したレイアウトは1ファイルにだけ記述しつつ、表示する内容の異なる複数のページを作成することが可能,<c:param> で指定したデータは、暗黙のオブジェクト param の中に入っています。テンプレートファイル（app.jsp）の中でEL式を使って ${param.name属性名} のようにして取り出すことが可能です。 --%>
     <c:param name="content">
         <c:if test="${flush != null}">
             <div id="flush_success">
@@ -34,9 +36,26 @@
                         <td class="diaries_action"><a href="<c:url value='?action=${actDia}&command=${commShow}&id=${diary.id}' />">詳細を見る</a></td>
                     </tr>
                 </c:forEach>
+                <c:forEach var="diary" items="${diaries}" varStatus="status">
+                    <tr class="row${status.count % 2}"><%--数字が振られていくループカウンタ --%>
+                        <td><c:out value="${diary.name}" /></td><%--diary というのは DiaryViewクラスのインスタンス --%>
+                        <td><c:out value="${diary.diaryDate}" /></td>
+                        <td><c:out value="${diary.title}" /></td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${diary.deleteFlag == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()}">
+                                    （削除済み）
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="<c:url value='?action=${actDia}&command=${commShow}&id=${diary.id}' />">詳細を見る</a>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
-
+           <%-- 長くなってしまった文章を複数のページに分割して、情報を読み取りやすくするナビゲーション--%>
         <div id="pagination">
             （全 ${diaries_count} 件）<br />
             <c:forEach var="i" begin="1" end="${((diaries_count - 1) / maxRow) + 1}" step="1">
