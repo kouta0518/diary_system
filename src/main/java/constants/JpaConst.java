@@ -33,7 +33,7 @@ public interface JpaConst {
     String ENTITY_DIA = "diary"; //日記
 
     //JPQL内パラメータ
-    String JPQL_PARM_CODE = "code"; //社員番号
+
     String JPQL_PARM_PASSWORD = "password"; //パスワード
 
     //NamedQueryの nameとquery
@@ -44,10 +44,9 @@ public interface JpaConst {
     //全ての日報の件数を取得する
     String Q_DIA_COUNT = ENTITY_DIA + ".count";
     String Q_DIA_COUNT_DEF = "SELECT COUNT(r) FROM Diary AS r";
-    //指定した従業員が作成した日報を全件idの降順で取得する
-    String Q_DIA_GET_ALL_MINE = ENTITY_DIA + ".getAllMine";
-    //指定した従業員が作成した日報の件数を取得する
-    String Q_DIA_COUNT_ALL_MINE = ENTITY_DIA + ".countAllMine";
+    //SQLがdelete_flag=0のものだけを取って来るようにする
+    String Q_DIA_DEL_FALSE = ENTITY_DIA + ".getAllNotDelete";
+    String Q_DIA_DEL_FALSE_DEF = "SELECT d FROM Diary AS d WHERE d.delete_Flag=0 ORDER BY d.id DESC";
 
 }
 

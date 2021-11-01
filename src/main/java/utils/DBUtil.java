@@ -10,7 +10,7 @@ public class DBUtil {
 
     private static EntityManagerFactory emf;
 
-    //EntityManagerインスタンスを生成
+    //EntityManagerインスタンスを生成,EntityManagerはデータベースに対してエンティティを登録したり，削除したりするためのインタフェースを持つオブジェクトです
     public static EntityManager createEntityManager() {
         return _getEntityManagerFactory().createEntityManager();
     }

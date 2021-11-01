@@ -28,7 +28,7 @@ public abstract class ActionBase {
      * @param servletRequest
      * @param servletResponse
      */
-    public void init(
+    public void init(     //doGetから飛んできた３つのインスタスがActionBaseで使えますよということ
             ServletContext servletContext,
             HttpServletRequest servletRequest,
             HttpServletResponse servletResponse) {
@@ -63,7 +63,7 @@ public abstract class ActionBase {
             *(例: action=Diary command=show の場合 DiaryActionクラスのshow()メソッドを実行する)
             *このメソッドの第一引数に与える文字列がメソッドの名前です。第二引数はメソッドの引数です。引数がない場合は new Class[0] と記述します。
             *this.getClass().getDeclaredMethod("index", new Class[0]);と記述すると、thisが表すクラスの index() メソッド、という意味
-            */
+            */              //this.getClass()はDiaryActionクラスのこと
             commandMethod = this.getClass().getDeclaredMethod(command, new Class[0]);
             commandMethod.invoke(this, new Object[0]); //メソッドに渡す引数はなし
 
@@ -87,11 +87,13 @@ public abstract class ActionBase {
     protected void forward(ForwardConst target) throws ServletException, IOException {
 
         //jspファイルの相対パスを作成、jspファイルの存在する場所を示す文字列
-        String forward = String.format("/WEB-INF/views/%s.jsp", target.getValue());
+        //%s とは文字列として埋め込めという指定子です
+        //targetがForwardConst.FW_DIA_INDEXになる、DiaryActionのindexメソットの最後に書いてあるforwardメソットから
+        String forward = String.format("/WEB-INF/views/%s.jsp", target.getValue());//%s = diaries/index
         RequestDispatcher dispatcher = request.getRequestDispatcher(forward);
 
         //jspファイルの呼び出し
-        dispatcher.forward(request, response);
+        dispatcher.forward(request, response);//WEB-INFフォルダの中にあるviewsフォルダの中にあるdiariesフォルダの中にあるindex.jspファイルを表示しなさいということです
 
     }
 
@@ -171,9 +173,9 @@ public abstract class ActionBase {
     protected int toNumber(String strNumber) {
         int number = 0;
         try {
-            number = Integer.parseInt(strNumber);
+            number = Integer.parseInt(strNumber);//parseIntは引数に指定した文字列を int 型の値に変換し戻り値として返します
         } catch (Exception e) {
-            number = Integer.MIN_VALUE;
+            number = Integer.MIN_VALUE;//1という数字がもらえる
         }
         return number;
     }

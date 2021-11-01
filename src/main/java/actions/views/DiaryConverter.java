@@ -61,7 +61,8 @@ public class DiaryConverter {
      * @return Viewモデルのリスト
      */
     public static List<DiaryView> toViewList(List<Diary> list) {
-        List<DiaryView> evs = new ArrayList<>();
+        //List<データ型名> オブジェクト名 = new ArrayList<データ型名>();
+        List<DiaryView> evs = new ArrayList<>(); //List型のオブジェクトにはArrayListクラスなどで生成したインスタンスを格納します。インスタンスを生成する際には、new演算子を用います。
 
         for (Diary d : list) {
             evs.add(toView(d));

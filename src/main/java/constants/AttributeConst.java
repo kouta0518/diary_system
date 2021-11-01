@@ -30,6 +30,7 @@ public enum AttributeConst {
     DIARY("diary"),
     DIARIES("diaries"),
     DIA_COUNT("diaries_count"),
+    DIA_DELETE("diaries_delete"),
     DIA_ID("id"),
     DIA_DATE("diary_date"),
     DIA_NAME("name"),

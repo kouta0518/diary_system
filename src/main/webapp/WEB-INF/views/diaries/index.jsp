@@ -36,27 +36,10 @@
                         <td class="diaries_action"><a href="<c:url value='?action=${actDia}&command=${commShow}&id=${diary.id}' />">詳細を見る</a></td>
                     </tr>
                 </c:forEach>
-                <c:forEach var="diary" items="${diaries}" varStatus="status">
-                    <tr class="row${status.count % 2}"><%--数字が振られていくループカウンタ --%>
-                        <td><c:out value="${diary.name}" /></td><%--diary というのは DiaryViewクラスのインスタンス --%>
-                        <td><c:out value="${diary.diaryDate}" /></td>
-                        <td><c:out value="${diary.title}" /></td>
-                        <td>
-                            <c:choose>
-                                <c:when test="${diary.deleteFlag == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()}">
-                                    （削除済み）
-                                </c:when>
-                                <c:otherwise>
-                                    <a href="<c:url value='?action=${actDia}&command=${commShow}&id=${diary.id}' />">詳細を見る</a>
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
-                    </tr>
-                </c:forEach>
             </tbody>
         </table>
            <%-- 長くなってしまった文章を複数のページに分割して、情報を読み取りやすくするナビゲーション--%>
-        <div id="pagination">
+        <%-- <div id="pagination">
             （全 ${diaries_count} 件）<br />
             <c:forEach var="i" begin="1" end="${((diaries_count - 1) / maxRow) + 1}" step="1">
                 <c:choose>
@@ -68,7 +51,7 @@
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
-        </div>
+        </div>  --%>
         <p><a href="<c:url value='?action=${actDia}&command=${commNew}' />">新規日報の登録</a></p>
 
     </c:param>

@@ -40,14 +40,19 @@ public class DiaryAction extends ActionBase {
     public void index() throws ServletException, IOException {
         //指定されたページ数の一覧画面に表示するデータを取得
         int page = getPage();
-        List<DiaryView> diaries = service.getAllPerPage(page);
+        List<DiaryView> diaries = service.getAllPerPage(page);//15けんのDiaryViewのリストを受けっとている
         //全日記データを取得
-        long diariesCount = service.countAll();
+        //long diariesCount = service.countAll();
+        List<DiaryView> diariesDelete = service.deleteAll();
 
-        putRequestScope(AttributeConst.DIARIES, diaries);//取得した日記データ
-        putRequestScope(AttributeConst.DIA_COUNT, diariesCount);//全ての日記データの件数
+        putRequestScope(AttributeConst.DIARIES, diaries);//取得した日記データ   ,DIARIESというキーワードでjspで１５件のリストが使える、DiaryViewのインスタンスが使える
+        putRequestScope(AttributeConst.DIA_DELETE, diariesDelete);
+        //putRequestScope(AttributeConst.DIA_COUNT, diariesCount);//全ての日記データの件数
         putRequestScope(AttributeConst.PAGE, page);//ページ数
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE);// 一ページに表示するレコードの数
+
+        //delete_flag=0だけを取得する
+
 
         //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
         String flush = getSessionScope(AttributeConst.FLUSH);
@@ -55,7 +60,7 @@ public class DiaryAction extends ActionBase {
             putRequestScope(AttributeConst.FLUSH, flush);
             removeSessionScope(AttributeConst.FLUSH);
         }
-        //
+        //index.jspの呼び出し
         forward(ForwardConst.FW_DIA_INDEX);
     }
 
@@ -135,16 +140,16 @@ public class DiaryAction extends ActionBase {
         //idを条件に日記データを取得する
         DiaryView dv = service.findOne(toNumber(getRequestParam(AttributeConst.DIA_ID)));
 
-        if (dv == null) {
+        if (dv == null || dv.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
             //該当の日記データが存在しない場合はエラー画面を表示
             forward(ForwardConst.FW_ERR_UNKNOWN);
-
-        } else {
-            putRequestScope(AttributeConst.DIARY, dv);//取得した日記データ
-          //詳細画面を表示
+            return;
+        }
+        putRequestScope(AttributeConst.DIARY, dv);//取得した日記データ
+            //詳細画面を表示
             forward(ForwardConst.FW_DIA_SHOW);
         }
-    }
+
 
     /**
      * 編集画面を表示する
@@ -152,22 +157,22 @@ public class DiaryAction extends ActionBase {
      * @throws IOException
      */
     public void edit() throws ServletException, IOException {
-        //idを条件に日報データを取得する
+        //idを条件に日記データを取得する
         DiaryView dv = service.findOne(toNumber(getRequestParam(AttributeConst.DIA_ID)));
 
-        if (dv == null) {
-            //該当の日報データが存在しない場合はエラー画面を表示
+        if (dv == null || dv.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
+            //該当の日記データが存在しない場合はエラー画面を表示
             forward(ForwardConst.FW_ERR_UNKNOWN);
-
-        } else {
+           return;
+        }
 
             putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-            putRequestScope(AttributeConst.DIARY, dv); //取得した日報データ
+            putRequestScope(AttributeConst.DIARY, dv); //取得した日記データ
 
             //編集画面を表示
             forward(ForwardConst.FW_DIA_EDIT);
         }
-    }
+
 
     /**
      * 更新を行う

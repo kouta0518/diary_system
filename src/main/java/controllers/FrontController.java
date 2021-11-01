@@ -73,7 +73,7 @@ public class FrontController extends HttpServlet {
             //該当するActionオブジェクトを作成 (例:リクエストからパラメータ action=Diary の場合、actions.DiaryActionオブジェクト)
             // "actions.DiaryAction"という文字列から actionsパッケージにある DiaryActionというクラス型を取得していることに他なりません。
             //forNameは、クラス名を元にそのクラスのインスタンスを作成するメソッドです
-            type = Class.forName(String.format("actions.%sAction", actionString));
+            type = Class.forName(String.format("actions.%sAction", actionString));//%s とは文字列として埋め込めという指定子です
 /**
  * http://localhost:8080/diary_system/?action=Diary&command=index
 というURLにアクセスすると、クエリパラメータにより actionというキーワードに紐づいて Diaryという値が飛んできてそれを取得しています。クエリーパラメータはURLに付け加える情報。
@@ -90,7 +90,7 @@ public class FrontController extends HttpServlet {
             //エラー処理を行うActionオブジェクトを作成
             action = new UnknownAction();
         }
-        return action;
+        return action;//完成したDiaryActionのインスタンスをあげると言っている
     }
 
 }
