@@ -38,20 +38,7 @@
                 </c:forEach>
             </tbody>
         </table>
-           <%-- 長くなってしまった文章を複数のページに分割して、情報を読み取りやすくするナビゲーション--%>
-        <%-- <div id="pagination">
-            （全 ${diaries_count} 件）<br />
-            <c:forEach var="i" begin="1" end="${((diaries_count - 1) / maxRow) + 1}" step="1">
-                <c:choose>
-                    <c:when test="${i == page}">
-                        <c:out value="${i}" />&nbsp;
-                    </c:when>
-                    <c:otherwise>
-                        <a href="<c:url value='?action=${actDia}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>&nbsp;
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-        </div>  --%>
+
         <p><a href="<c:url value='?action=${actDia}&command=${commNew}' />">新規日報の登録</a></p>
 
     </c:param>

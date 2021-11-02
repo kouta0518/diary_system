@@ -17,11 +17,6 @@ public enum AttributeConst {
     //ログイン画面
     LOGIN_ERR("loginError"),
 
-
-    //管理者フラグ
-    ROLE_ADMIN(1),
-    ROLE_GENERAL(0),
-
     //削除フラグ
     DEL_FLAG_TRUE(1),
     DEL_FLAG_FALSE(0),
@@ -29,8 +24,6 @@ public enum AttributeConst {
     //日記管理
     DIARY("diary"),
     DIARIES("diaries"),
-    DIA_COUNT("diaries_count"),
-    DIA_DELETE("diaries_delete"),
     DIA_ID("id"),
     DIA_DATE("diary_date"),
     DIA_NAME("name"),

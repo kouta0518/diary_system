@@ -18,29 +18,11 @@ public class DiaryService extends ServiceBase {
      * @return 一覧画面に表示するデータのリスト
      */
     public List<DiaryView> getAllPerPage(int page) {
-        List<Diary> diaries = em.createNamedQuery(JpaConst.Q_DIA_GET_ALL, Diary.class)//em = diary_system, EntityManagerクラスの「createNamedQuery」メソッドを使います。引数には、利用するNamedQueryの名前（nameで指定した値）を用意してやります。これにより、そのNamedQueryに用意されたqueryのクエリーを実行するためのQueryインスタンスが作成されます。
+        List<Diary> diaries = em.createNamedQuery(JpaConst.Q_DIA_DEL_FALSE, Diary.class)//em = diary_system, EntityManagerクラスの「createNamedQuery」メソッドを使います。引数には、利用するNamedQueryの名前（nameで指定した値）を用意してやります。これにより、そのNamedQueryに用意されたqueryのクエリーを実行するためのQueryインスタンスが作成されます。
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))//動的ファインダーメソッドの整数引数にこれで注釈を付けて、関心のある結果セットの最初の結果のインデックスを渡します。結果セットのページングに役立ちます。よって補完され MaxResultsます
                 .setMaxResults(JpaConst.ROW_PER_PAGE)//動的ファインダーメソッドの整数引数にこれで注釈を付けて、返される結果ウィンドウの最大サイズを渡します。結果セットのページングに役立ちます。の補集合FirstResult。
                 .getResultList();//このオブジェクトは、機能の結果を戻すために、拡張ユーザ定義機能で使用されます。
         return DiaryConverter.toViewList(diaries);
-    }
-    /**
-     * 日記テーブルのデータの件数を取得し、返却する
-     * @return データの件数
-     */
-    //public long countAll() {
-    //    long diaries_count = (long) em.createNamedQuery(JpaConst.Q_DIA_COUNT, Long.class)
-       //         .getSingleResult();//SingleResultクラスの新しいインスタンスを初期化します。
-   //     return diaries_count;
-    //}
-
-    /**
-     * SQLからdelete_flag=0の物だけを取得する
-     */
-    public List<DiaryView> deleteAll() {
-        List<Diary> diaries_delete = em.createNamedQuery(JpaConst.Q_DIA_DEL_FALSE, Diary.class)
-                .getResultList();
-        return DiaryConverter.toViewList(diaries_delete);
     }
 
     /**

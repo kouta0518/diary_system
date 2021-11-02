@@ -33,26 +33,15 @@ public class DiaryAction extends ActionBase {
     }
 
     /**
-     * 一覧画面を表示する
+     * SQLからdeleteFlag=0のものだけを表示するデータを取得
      * @throws ServletException
      * @throws IOException
      */
     public void index() throws ServletException, IOException {
-        //指定されたページ数の一覧画面に表示するデータを取得
         int page = getPage();
-        List<DiaryView> diaries = service.getAllPerPage(page);//15けんのDiaryViewのリストを受けっとている
-        //全日記データを取得
-        //long diariesCount = service.countAll();
-        List<DiaryView> diariesDelete = service.deleteAll();
-
-        putRequestScope(AttributeConst.DIARIES, diaries);//取得した日記データ   ,DIARIESというキーワードでjspで１５件のリストが使える、DiaryViewのインスタンスが使える
-        putRequestScope(AttributeConst.DIA_DELETE, diariesDelete);
-        //putRequestScope(AttributeConst.DIA_COUNT, diariesCount);//全ての日記データの件数
-        putRequestScope(AttributeConst.PAGE, page);//ページ数
+        List<DiaryView> diaries = service.getAllPerPage(page);
+        putRequestScope(AttributeConst.DIARIES, diaries);//取得した日記データ   ,diariesというキーワードでjspでdeleteFlag=0リストが使える、DiaryViewのインスタンスが使える
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE);// 一ページに表示するレコードの数
-
-        //delete_flag=0だけを取得する
-
 
         //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
         String flush = getSessionScope(AttributeConst.FLUSH);
@@ -189,7 +178,6 @@ public class DiaryAction extends ActionBase {
             dv.setDiaryDate(toLocalDate(getRequestParam(AttributeConst.DIA_DATE)));
             dv.setTitle(getRequestParam(AttributeConst.DIA_TITLE));
             dv.setContent(getRequestParam(AttributeConst.DIA_CONTENT));
-            dv.setDeleteFlag(toNumber(getRequestParam(AttributeConst.DEL_FLAG_FALSE)));
 
             //日記データを更新する
             List<String> errors = service.update(dv);

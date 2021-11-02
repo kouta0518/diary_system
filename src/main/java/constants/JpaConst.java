@@ -12,8 +12,6 @@ public interface JpaConst {
     //データ取得件数の最大値
     int ROW_PER_PAGE = 15; //1ページに表示するレコードの数
 
-    int ROLE_ADMIN = 1; //管理者権限ON(管理者)
-    int ROLE_GENERAL = 0; //管理者権限OFF(一般)
     int DIA_DEL_TRUE = 1; //削除フラグON(削除済み)
     int DIA_DEL_FALSE = 0; //削除フラグOFF(現役)
 
@@ -32,21 +30,14 @@ public interface JpaConst {
     //Entity名
     String ENTITY_DIA = "diary"; //日記
 
-    //JPQL内パラメータ
-
-    String JPQL_PARM_PASSWORD = "password"; //パスワード
-
     //NamedQueryの nameとquery
 
     //全ての日報をidの降順に取得する
     String Q_DIA_GET_ALL = ENTITY_DIA + ".getAll";
     String Q_DIA_GET_ALL_DEF = "SELECT r FROM Diary AS r ORDER BY r.id DESC";
-    //全ての日報の件数を取得する
-    String Q_DIA_COUNT = ENTITY_DIA + ".count";
-    String Q_DIA_COUNT_DEF = "SELECT COUNT(r) FROM Diary AS r";
     //SQLがdelete_flag=0のものだけを取って来るようにする
     String Q_DIA_DEL_FALSE = ENTITY_DIA + ".getAllNotDelete";
-    String Q_DIA_DEL_FALSE_DEF = "SELECT d FROM Diary AS d WHERE d.delete_Flag=0 ORDER BY d.id DESC";
+    String Q_DIA_DEL_FALSE_DEF = "SELECT d FROM Diary AS d WHERE d.deleteFlag=0 ORDER BY d.id DESC";
 
 }
 

@@ -9,7 +9,6 @@ public enum ForwardConst {
 
     //action
     ACT("action"),
-    ACT_TOP("Top"),
     ACT_DIA("Diary"),
     ACT_AUTH("Auth"),
 
@@ -18,9 +17,6 @@ public enum ForwardConst {
     CMD_NONE(""),
     CMD_INDEX("index"),
     CMD_SHOW("show"),
-    CMD_SHOW_LOGIN("showLogin"),
-    CMD_LOGIN("login"),
-    CMD_LOGOUT("logout"),
     CMD_NEW("entryNew"),
     CMD_CREATE("create"),
     CMD_EDIT("edit"),
@@ -29,8 +25,6 @@ public enum ForwardConst {
 
     //jsp
     FW_ERR_UNKNOWN("error/unknown"),
-    FW_TOP_INDEX("topPage/index"),
-    FW_LOGIN("login/login"),
     FW_DIA_INDEX("diaries/index"),
     FW_DIA_SHOW("diaries/show"),
     FW_DIA_NEW("diaries/new"),
@@ -57,7 +51,6 @@ public enum ForwardConst {
 
     /**
      * 値(文字列)から、該当する定数を返却する
-     * (例: "Report"→ForwardConst.ACT_REP)
      * @param 値(文字列)
      * @return ForwardConst型定数
      */

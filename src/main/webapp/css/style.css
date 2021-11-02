@@ -107,16 +107,7 @@ select {
     height: 30px;
 }
 
-#header_menu {
-    width: 57%;
-    padding-top: 17px;
-    padding-left: 3%;
-    display: inline-block;
-}
 
-#header a {
-    color: #eeeeee;
-}
 
 h1 a {
     color: #eeeeee;

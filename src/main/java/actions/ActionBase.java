@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import constants.AttributeConst;
 import constants.ForwardConst;
-import constants.PropertyConst;
 
 public abstract class ActionBase {
     protected ServletContext context;
@@ -238,16 +237,5 @@ public abstract class ActionBase {
     protected void removeSessionScope(AttributeConst key) {
         request.getSession().removeAttribute(key.getValue());
     }
-
-    /**
-     * アプリケーションスコープから指定されたパラメータの値を取得し、返却する
-     * @param key パラメータ名
-     * @return パラメータの値
-     */
-    @SuppressWarnings("unchecked")
-    protected <R> R getContextScope(PropertyConst key) {
-        return (R) context.getAttribute(key.getValue());
-    }
-
 }
 

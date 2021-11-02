@@ -27,9 +27,6 @@ import lombok.Setter;
     @NamedQuery(
             name = JpaConst.Q_DIA_GET_ALL,
             query = JpaConst.Q_DIA_GET_ALL_DEF),
-   // @NamedQuery(
-     //       name = JpaConst.Q_DIA_COUNT,
-      //      query = JpaConst.Q_DIA_COUNT_DEF),
     @NamedQuery(
             name = JpaConst.Q_DIA_DEL_FALSE,
             query = JpaConst.Q_DIA_DEL_FALSE_DEF),
